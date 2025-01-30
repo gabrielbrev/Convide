@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-    --background-color: white;
+    --background-color: rgb(241, 245, 245);
     --envelope-color: #00334c;
     --flap-color: #00334c;
     --pocket-color: #0077b2;
