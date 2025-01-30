@@ -1,0 +1,20 @@
+{
+    "whatsappUrl": "https://wa.link/festa123",
+    "googleMapsUrl": "https://maps.app.goo.gl/fE8kaUxdRgXHcQX26",
+    "locationCoords": {
+        "lat": -23.55052,
+        "lng": -46.633308
+    },
+    "schedule": {
+        "days": [
+            {
+                "date": "2024-07-20",
+                "description": "18h - Abertura do evento e recepção\n20h - Coquetel e música ao vivo\n22h - DJ Set e pista de dança\n00h - Show especial\n02h - Encerramento oficial"
+            },
+            {
+                "date": "2024-07-21",
+                "description": "11h - Brunch pós-festa\n13h - Pool Party\n16h - Encerramento da celebração"
+            }
+        ]
+    }
+}
