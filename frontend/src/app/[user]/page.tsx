@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { Plus } from "lucide-react";
 
 const invites: { name: string; accesses: number }[] = [
     { name: "Lucas", accesses: 15 },
@@ -19,17 +20,11 @@ const invites: { name: string; accesses: number }[] = [
 export default function User() {
     const scrollRef = useRef<HTMLUListElement>(null);
 
-    const [isFullyScrolled, setIsFullyScrolled] = useState<boolean>(false);
     const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
     useEffect(() => {
         function handleScroll() {
-            if (!scrollRef.current) return;
-
-            const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
-
-            setIsScrolled(scrollTop > 0);
-            setIsFullyScrolled(scrollTop + clientHeight >= scrollHeight);
+            if (scrollRef.current) setIsScrolled(scrollRef.current.scrollTop > 0);
         }
 
         scrollRef.current?.addEventListener("scroll", handleScroll);
@@ -38,24 +33,21 @@ export default function User() {
     }, []);
 
     return (
-        <div className="flex flex-col p-8 w-full items-center">
-            <div className="flex flex-row items-center justify-between bg-white w-full rounded-lg max-w-6xl mb-5 shadow-md overflow-hidden">
+        <div className="flex flex-col p-4 pb-0 w-full items-center">
+            <div className="flex flex-row items-center justify-between w-full max-w-6xl shadow-sm rounded-lg border">
                 <div className="flex flex-col w-full justify-start items-start">
-                    <div className="flex bg-black/35 h-10 w-full justify-start items-center px-3">
-                        <label className="text-xl text-white font-semibold">Meus convites</label>
-                    </div>
-                    <div className="flex flex-row items-center justify-center p-3">
+                    <div className="flex flex-row items-center justify-start p-2.5 bg-white w-full rounded-lg">
                         <Image
                             className="rounded-full"
-                            width={72}
-                            height={72}
+                            width={64}
+                            height={64}
                             alt="user image"
                             objectFit="cover"
                             src="https://img.freepik.com/free-photo/vertical-shot-amazed-young-african-american-male-with-stupefied-expression_273609-28353.jpg"
                         />
                         <div className="flex flex-col">
-                            <label className="ml-3 text-xl font-bold">Sigma boy</label>
-                            <label className="ml-3 text-md">
+                            <label className="ml-3 text-lg font-bold">Sigma boy</label>
+                            <label className="ml-3 text-sm">
                                 {invites.length} convite{invites.length > 1 ? "s" : ""} criado
                                 {invites.length > 1 ? "s" : ""}
                             </label>
@@ -63,23 +55,24 @@ export default function User() {
                     </div>
                 </div>
             </div>
-            <div className="relative overflow-clip h-full max-w-6xl w-full flex-1">
+            <div className="flex w-full justify-start items-start my-3 max-w-6xl">
+                <h2 className="text-3xl text-black font-semibold mx-5">Meus convites</h2>
+            </div>
+            <div className="relative overflow-clip h-full w-full flex-1">
                 <div
-                    className={`absolute h-4 w-full top-0 bg-gradient-to-b from-[#F1F5F5] to-transparent z-10 duration-100 ${
+                    className={`absolute h-2 w-full top-0 bg-gradient-to-b from-[#FBFCFF] to-transparent z-10 duration-100 ${
                         isScrolled ? "opacity-100" : "opacity-0"
                     }`}
                 />
-                <div
-                    className={`absolute h-4 w-full bottom-0 bg-gradient-to-t from-[#F1F5F5] to-transparent z-10 duration-100 ${
-                        isFullyScrolled ? "opacity-0" : "opacity-100"
-                    }`}
-                />
 
-                <ul className="overflow-scroll h-full max-w-6xl w-full flex-1" ref={scrollRef}>
+                <ul
+                    className="overflow-scroll size-full flex-1 scrollbar-hide justify-center items-center"
+                    ref={scrollRef}
+                >
                     {invites.map((item, index) => (
                         <li
                             key={index}
-                            className="flex flex-row h-48 bg-white rounded-lg mx-auto mb-4 shadow-md overflow-hidden"
+                            className="flex flex-row h-36 bg-white rounded-lg mb-4 shadow-sm overflow-hidden max-w-6xl mx-auto border"
                         >
                             <Image
                                 src="/images/convite.png"
@@ -93,20 +86,26 @@ export default function User() {
                                     <label className="text-3xl font-bold">{item.name}</label>
                                     <label className="text-lg">{item.accesses} acessos</label>
                                 </div>
-                                <div className="flex flex-col gap-y-2 w-32 font-bold">
-                                    <button className="bg-blue-200 h-10 rounded-xl border-2 border-blue-400 text-blue-800">
+                                <div className="flex flex-col gap-y-2 w-32 font-bold text-sm">
+                                    <button className="bg-blue-200 h-7 rounded-full border-2 border-blue-400 text-blue-800">
                                         VER
                                     </button>
-                                    <button className="bg-green-200 h-10 rounded-xl border-2 border-green-400 text-green-800">
+                                    <button className="bg-green-200 h-7 rounded-full border-2 border-green-400 text-green-800">
                                         EDITAR
                                     </button>
-                                    <button className="bg-red-200 h-10 rounded-xl border-2 border-red-400 text-red-800">
+                                    <button className="bg-red-200 h-7 rounded-full border-2 border-red-400 text-red-800">
                                         ARQUIVAR
                                     </button>
                                 </div>
                             </div>
                         </li>
                     ))}
+                    <li className="flex flex-row mb-10 justify-center items-center">
+                        <button className="flex flex-row justify-center my-1 rounded-2xl items-center duration-300 text-gray-400 hover:text-gray-500">
+                            <Plus className="size-20 ml-1" strokeWidth={1.5} />
+                            <span className="text-3xl font-semibold mr-6">Novo convite</span>
+                        </button>
+                    </li>
                 </ul>
             </div>
         </div>
