@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import { Plus } from "lucide-react";
+import Link from "next/link";
 
 const invites: { name: string; accesses: number }[] = [
     { name: "Lucas", accesses: 15 },
@@ -17,7 +18,14 @@ const invites: { name: string; accesses: number }[] = [
     { name: "Beach Bash", accesses: 26 },
 ];
 
-export default function User() {
+interface PageDetailProps {
+    params: Promise<{
+        user: string;
+    }>;
+}
+
+export default function User({ params }: PageDetailProps) {
+    const { user } = use(params);
     const scrollRef = useRef<HTMLUListElement>(null);
 
     const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -101,10 +109,13 @@ export default function User() {
                         </li>
                     ))}
                     <li className="flex flex-row mb-10 justify-center items-center">
-                        <button className="flex flex-row justify-center my-1 rounded-2xl items-center duration-300 text-gray-400 hover:text-gray-500">
+                        <Link
+                            href={`/${user}/edit`}
+                            className="flex flex-row justify-center my-1 rounded-2xl items-center duration-300 text-gray-400 hover:text-gray-500"
+                        >
                             <Plus className="size-20 ml-1" strokeWidth={1.5} />
                             <span className="text-3xl font-semibold mr-6">Novo convite</span>
-                        </button>
+                        </Link>
                     </li>
                 </ul>
             </div>
